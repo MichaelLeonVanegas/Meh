@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
+	</head>
+	<body>
+        <div id="arm"></div>
+        <form>
+            <input type="range" id="Bra1" max="1.571" min="-0.262" name="Angulo 1" step="0.001">
+            <input type="range" id="Bra2" min="1.309" max="2.22" name="Angulo 2" step="0.001">
+        </form>
+		<script type="module" >
+
+			//import * as THREE from 'three';
+            const width = window.innerWidth;
+            const height = window.innerHeight/2;
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, width / height, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( width, height );
+			const arm_DOM = document.getElementById("arm");
+			arm_DOM.appendChild( renderer.domElement );
+
+
+			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+			const material = new THREE.MeshNormalMaterial( { color: 0x00ff00 } );
+			const base = new THREE.Mesh( geometry, material );
+            base.translateY(1/2);
+			scene.add( base );
+
+            const shoulder = new THREE.Object3D();
+		    shoulder.translateY(1/2);
+		    base.add(shoulder);
+
+
+            const geometry2 = new THREE.BoxGeometry( 0.5, 2, 0.5 );
+			const PriBra = new THREE.Mesh( geometry2, material );
+            PriBra.translateY(1)
+			shoulder.add( PriBra );  
+
+            const Codo = new THREE.Object3D();
+		    Codo.translateY(1);
+            Codo.translateZ(0.25)
+            Codo.rotation.x = 1.571;
+            PriBra.add(Codo);
+
+		    const geometry3 = new THREE.BoxGeometry(0.25, 2, 0.25);
+		    const SegBra = new THREE.Mesh(geometry3, material);
+		    SegBra.translateY(1);
+
+            
+		    Codo.add(SegBra);
+
+
+			camera.position.set(5,3,0);
+            camera.rotation.y = 1.571;
+
+            
+
+			function animate() {
+                Codo.rotation.x = parseFloat(document.getElementById('Bra2').value);
+                shoulder.rotation.x = parseFloat(document.getElementById('Bra1').value);
+				requestAnimationFrame( animate );
+                renderer.render( scene, camera );
+			}
+
+			animate();
+		
+		</script>
+
+	</body>
+</html>
