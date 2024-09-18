@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+["""<!DOCTYPE html>
 <html>
 	<head lang="en">
 		<meta charset="utf-8">
@@ -15,6 +15,7 @@
             <input type="range" id="Bra2" min="1.309" max="2.22" name="Angulo 2" step="0.001">
         </form>
 		<script type="module" >
+""","""
 
 			//import * as THREE from 'three';
             const width = window.innerWidth;
@@ -37,7 +38,7 @@
             const shoulder = new THREE.Object3D();
 		    shoulder.translateY(1/2);
 		    base.add(shoulder);
-
+""","""
 
             const geometry2 = new THREE.BoxGeometry( 0.5, 2, 0.5 );
 			const PriBra = new THREE.Mesh( geometry2, material );
@@ -71,6 +72,7 @@
 			}
 
 			animate();
+"""]
 		
 		</script>
 
